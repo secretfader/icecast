@@ -23,3 +23,7 @@ depcomp
 install-sh
 libtool
 ltmain.sh
+conf/icecast.xml.dist
+conf/icecast_minimal.xml.dist
+conf/icecast_shoutcast_compat.xml.dist
+conf/icecast_urlauth.xml.dist
