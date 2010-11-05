@@ -1,5 +1,4 @@
-icecast 2.x - README
----------------------------------------------------------------------
+# Icecast 2.3.2
 
 Icecast is a streaming media server which currently supports Ogg
 streaming including the vorbis and theora codecs. Also icecast can
@@ -12,9 +11,9 @@ standards for communication and interaction.
 Icecast is distributed under the GNU GPL, version 2. A copy of this
 license is included with this software in the COPYING file.
 
-Prerequisites
----------------------------------------------------------------------
-icecast requires the following packages :
+## Prerequisites
+
+Icecast requires the following packages:
 
 * libxml2 - http://xmlsoft.org/downloads.html
 * libxslt - http://xmlsoft.org/XSLT/downloads.html
@@ -24,8 +23,9 @@ icecast requires the following packages :
         authentication.
 * ogg/vorbis - http://www.vorbis.com/files (>= version 1.0 required)
 
-A note about prerequisite packages
----------------------------------------------------------------------
+
+### A note about prerequisite packages
+
 Most distributions have some sort of package management repository for
 pre-built packages (eg rpm, deb etc).  These setups often have a runtime
 package, which is usually installed for you by default, and enables you
@@ -33,14 +33,14 @@ to run applications that depend on them.  However if you are building
 icecast from source then the runtime system is not enough. You will also
 need a development package named something like libxslt-devel
 
-Build/Install
----------------------------------------------------------------------
+## Build/Install
+
 To build icecast on a Unix platform, perform the following :
 
 Run
-   ./configure
-   make
-   make install
+* ./configure
+* make
+* make install
 
 This is the typical procedure if you download the tar file.  If you retrive
 the code from subversion or want to rebuild the configure then run autogen.sh
@@ -54,4 +54,3 @@ viewing doc/index.html in a browser.
 
 Please email us at icecast@xiph.org or icecast-dev@xiph.org, or come and see
 us at irc.freenode.net, channel #icecast, if you have any troubles.
-
