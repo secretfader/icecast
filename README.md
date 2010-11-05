@@ -8,6 +8,10 @@ running jukebox and many things in between. It is very versatile in
 that new formats can be added relatively easily and supports open
 standards for communication and interaction.
 
+This version was based off of the 2.3.2 trunk, and includes extra
+functionality added by Nicholas Young (of Original Machine). Extra
+documentation on these additions is forthcoming.
+
 Icecast is distributed under the GNU GPL, version 2. A copy of this
 license is included with this software in the COPYING file.
 
