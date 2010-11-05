@@ -427,6 +427,7 @@ The source of the relay may require authentication itself, if so state the passw
         &lt;/authentication&gt;
         &lt;on-connect&gt;/home/icecast/bin/source-start&lt;/on-connect&gt;
         &lt;on-disconnect&gt;/home/icecast/bin/source-end&lt;/on-disconnect&gt;
+		&lt;metadata-update-uri&gt;http://example.com/update_metadata&lt;/update-metadata-uri&gt;
     &lt;/mount&gt;
 </pre>
 <p>This section contains the settings which apply only to a specific mountpoint and applies to
@@ -617,6 +618,11 @@ This specifies that the named mount point will require listener authentication. 
     <p>State a program that is run when the source ends. It is passed a parameter which is the
     name of the mountpoint that has ended. The processing of the stream does not wait for the
     script to end. This option is not available on win32
+    </p>
+</div>
+<h4>update-metadata-uri</h4>
+<div class="indentedbox">
+    <p>If set, the Icecast server will not log changes in metadata to a file. Instead, it will send a request using HTTP POST to the URL you provided with mount and metadata parameters.
     </p>
 </div>
 <p>
