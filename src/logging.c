@@ -30,6 +30,11 @@
 #include "logging.h"
 #include "util.h"
 
+/* Add curl, so we can directly use the HTTP form post functionality. - Nicholas Young */
+#include <curl/curl.h>
+#include <curl/types.h>
+#include <curl/easy.h>
+
 #ifdef _WIN32
 #define snprintf _snprintf
 #define vsnprintf _vsnprintf
@@ -184,13 +189,63 @@ void logging_playlist(const char *mount, const char *metadata, long listeners)
 #else
     strftime (datebuf, sizeof(datebuf), LOGGING_FORMAT_CLF, &thetime);
 #endif
-    /* This format MAY CHANGE OVER TIME.  We are looking into finding a good
-       standard format for this, if you have any ideas, please let us know */
-    log_write_direct (playlistlog, "%s|%s|%ld|%s",
-             datebuf,
-             mount,
-             listeners,
-             metadata);
+
+	/* Grab mount point settings. - Nicholas Young */
+	ice_config_t *config;
+	config_initialize();
+	config = config_get_config_unlocked();
+	mount_proxy *mountinfo;
+	mountinfo = config_find_mount(config, mount);
+	
+	/* 
+		If you haven't set a URL to update with the latest metadata in your config file,
+		go ahead and write to a file. - Nicholas Young
+	*/
+	if (mountinfo->update_metadata_uri == NULL) {
+		log_write_direct (playlistlog, "%s|%s|%ld|%s",
+						  datebuf,
+						  mount,
+						  listeners,
+						  metadata);
+	} else {
+		/* Allocate curl variables. - Nicholas Young */
+		CURL *handle;
+		CURLcode resp;
+		struct curl_httppost *formpost=NULL;
+		struct curl_httppost *lastptr=NULL;
+
+		curl_formadd(&formpost,
+					 &lastptr,
+					 CURLFORM_COPYNAME, "mount",
+					 CURLFORM_COPYCONTENTS, mount,
+					 CURLFORM_END);
+
+		curl_formadd(&formpost,
+					 &lastptr,
+					 CURLFORM_COPYNAME, "metadata",
+					 CURLFORM_COPYCONTENTS, metadata,
+					 CURLFORM_END);
+
+		handle = curl_easy_init();
+
+		if (handle) {
+			/* 
+				Reads
+					<mount>
+						<metadata-update-uri>http://...</metadata-update-uri>
+					</mount>
+
+				and POSTS to the appropriate URI.
+				For info on mountinfo (the object), see above. - Nicholas Young
+			*/
+
+			curl_easy_setopt(handle, CURLOPT_URL, mountinfo->update_metadata_uri);
+			curl_easy_setopt(handle, CURLOPT_HTTPPOST, formpost);
+			resp = curl_easy_perform(handle);
+			curl_easy_cleanup(handle);
+			curl_formfree(formpost);
+		}
+	}
 }
 
 

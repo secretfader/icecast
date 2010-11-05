@@ -119,24 +119,25 @@ static void config_clear_mount (mount_proxy *mount)
 {
     config_options_t *option;
 
-    if (mount->mountname)       xmlFree (mount->mountname);
-    if (mount->username)        xmlFree (mount->username);
-    if (mount->password)        xmlFree (mount->password);
-    if (mount->dumpfile)        xmlFree (mount->dumpfile);
-    if (mount->intro_filename)  xmlFree (mount->intro_filename);
-    if (mount->on_connect)      xmlFree (mount->on_connect);
-    if (mount->on_disconnect)   xmlFree (mount->on_disconnect);
-    if (mount->fallback_mount)  xmlFree (mount->fallback_mount);
-    if (mount->stream_name)     xmlFree (mount->stream_name);
-    if (mount->stream_description)  xmlFree (mount->stream_description);
-    if (mount->stream_url)      xmlFree (mount->stream_url);
-    if (mount->stream_genre)    xmlFree (mount->stream_genre);
-    if (mount->bitrate)         xmlFree (mount->bitrate);
-    if (mount->type)            xmlFree (mount->type);
-    if (mount->charset)         xmlFree (mount->charset);
-    if (mount->cluster_password)    xmlFree (mount->cluster_password);
+    if (mount->mountname)       		xmlFree (mount->mountname);
+    if (mount->username)        		xmlFree (mount->username);
+    if (mount->password)        		xmlFree (mount->password);
+	if (mount->update_metadata_uri)		xmlFree(mount->update_metadata_uri); /* Clear playlist-notify-uri - Nicholas Young */
+    if (mount->dumpfile)        		xmlFree (mount->dumpfile);
+    if (mount->intro_filename)  		xmlFree (mount->intro_filename);
+    if (mount->on_connect)      		xmlFree (mount->on_connect);
+    if (mount->on_disconnect)   		xmlFree (mount->on_disconnect);
+    if (mount->fallback_mount)  		xmlFree (mount->fallback_mount);
+    if (mount->stream_name)     		xmlFree (mount->stream_name);
+    if (mount->stream_description)  	xmlFree (mount->stream_description);
+    if (mount->stream_url)      		xmlFree (mount->stream_url);
+    if (mount->stream_genre)    		xmlFree (mount->stream_genre);
+    if (mount->bitrate)         		xmlFree (mount->bitrate);
+    if (mount->type)            		xmlFree (mount->type);
+    if (mount->charset)         		xmlFree (mount->charset);
+    if (mount->cluster_password)    	xmlFree (mount->cluster_password);
 
-    if (mount->auth_type)       xmlFree (mount->auth_type);
+    if (mount->auth_type)       		xmlFree (mount->auth_type);
     option = mount->auth_options;
     while (option)
     {
@@ -556,6 +557,7 @@ static void _parse_mount(xmlDocPtr doc, xmlNodePtr node,
     mount->burst_size = -1;
     mount->mp3_meta_interval = -1;
     mount->yp_public = -1;
+	mount->update_metadata_uri = NULL; /* NULL by default - Nicholas Young */
     mount->next = NULL;
 
     do {
@@ -564,6 +566,10 @@ static void _parse_mount(xmlDocPtr doc, xmlNodePtr node,
 
         if (xmlStrcmp (node->name, XMLSTR("mount-name")) == 0) {
             mount->mountname = (char *)xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
+        }
+		/* Add update-metadata-uri to mount configuration options. - Nicholas Young */
+		else if (xmlStrcmp (node->name, XMLSTR("update-metadata-uri")) == 0) {
+			mount->update_metadata_uri = (char *)xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
         }
         else if (xmlStrcmp (node->name, XMLSTR("username")) == 0) {
             mount->username = (char *)xmlNodeListGetString(

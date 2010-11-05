@@ -86,7 +86,9 @@ typedef struct _mount_proxy {
     char *type;
     char *subtype;
     int yp_public;
-
+	
+	char *update_metadata_uri; /* Add attribute for update-metadata-uri - Nicholas Young */
+	
     struct _mount_proxy *next;
 } mount_proxy;
 
