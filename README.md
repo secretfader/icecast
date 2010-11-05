@@ -18,11 +18,11 @@ Icecast requires the following packages:
 * libxml2 - http://xmlsoft.org/downloads.html
 * libxslt - http://xmlsoft.org/XSLT/downloads.html
 * curl - http://curl.haxx.se/download.html (>= version 7.10 required)
-  NOTE: icecast may be compiled without curl, however this will
-        disable Stream Directory server interaction (YP) and URL based 
-        authentication.
 * ogg/vorbis - http://www.vorbis.com/files (>= version 1.0 required)
 
+#### NOTE:
+
+Icecast may be compiled without curl, however this will disable Stream Directory server interaction (YP) and URL based authentication.
 
 ### A note about prerequisite packages
 
