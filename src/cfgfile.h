@@ -130,6 +130,9 @@ typedef struct ice_config_tag
     int on_demand; /* global setting for all relays */
 
     char *shoutcast_mount;
+	char *mongodb_host;		/* MongoDB connection stuff. - Nicholas Young */
+	char *mongodb_user;
+	char *mongodb_password;
     char *source_password;
     char *admin_username;
     char *admin_password;

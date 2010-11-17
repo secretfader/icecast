@@ -466,6 +466,15 @@ static void _parse_root(xmlDocPtr doc, xmlNodePtr node,
             tmp = (char *)xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
             configuration->master_update_interval = atoi(tmp);
             xmlFree (tmp);
+		} else if (xmlStrcmp (node->name), XMLSTR("mongodb-host")) == 0) { /* Grab host for MongoDB - Nicholas Young */
+			if (configuration->mongodb_host) xmlFree(configuration->mongodb_host);
+			configuration->mongodb_host = (char *)xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+		} else if (xmlStrcmp (node->name), XMLSTR("mongodb-user")) == 0) { /* Grab user for MongoDB - Nicholas Young */
+			if (configuration->mongodb_user) xmlFree(configuration->mongodb_user);
+			configuration->mongodb_user = (char *)xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
+		} else if (xmlStrcmp (node->name), XMLSTR("mongodb-password")) == 0) { /* Grab password for MongoDB - Nicholas Young */
+			if (configuration->mongodb_password) xmlFree(configuration->mongodb_password);
+			configuration->mongodb_password = (char *)xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
         } else if (xmlStrcmp (node->name, XMLSTR("shoutcast-mount")) == 0) {
             if (configuration->shoutcast_mount) xmlFree(configuration->shoutcast_mount);
             configuration->shoutcast_mount = (char *)xmlNodeListGetString(doc, node->xmlChildrenNode, 1);
