@@ -200,6 +200,9 @@ void config_clear(ice_config_t *c)
     if (c->access_log) xmlFree(c->access_log);
     if (c->error_log) xmlFree(c->error_log);
     if (c->shoutcast_mount) xmlFree(c->shoutcast_mount);
+	if (c->mongodb_host) xmlFree(c->mongodb_host); /* Free MongoDB server (in progress!)- Nicholas Young */
+	if (c->mongodb_user) xmlFree(c->mongodb_user);
+	if (c->mongodb_password) xmlFree(c->mongodb_password);
     if (c->master_server) xmlFree(c->master_server);
     if (c->master_username) xmlFree(c->master_username);
     if (c->master_password) xmlFree(c->master_password);
